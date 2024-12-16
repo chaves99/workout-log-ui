@@ -1,0 +1,7 @@
+{
+  "name": "wokout-log-ui",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
