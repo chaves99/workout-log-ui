@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{workout?.description}}</ion-title>
+    <!-- <ion-title>{{workout?.start | date: 'medium'}}</ion-title> -->
+    <ion-button
+      fill="outline"
+      shape="round"
+      slot="end"
+      style="text-align: center; bottom: 10px; position: sticky"
+      (click)="setupModalAddExercise()"
+    >
+      <ion-icon slot="start" name="add"></ion-icon>
+      Add
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-header mode="md">
+    <ion-title>{{workout?.start | date: 'medium'}}</ion-title>
+  </ion-header>
+  <wl-exercise-table
+    [exercises]="workout?.exercises"
+    (executionDeletion)="deleteExecution($event)"
+  />
+</ion-content>

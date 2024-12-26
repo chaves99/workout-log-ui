@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title style="text-align: center">Exercise</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form>
+    <ion-item>
+      <ion-input
+        labelPlacement="stacked"
+        label="Exercise"
+        placeholder="Squat"
+        [(ngModel)]="name"
+        [ngModelOptions]="{ standalone: true }"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-input
+              labelPlacement="stacked"
+              label="Reps"
+              placeholder="8"
+              type="number"
+              [(ngModel)]="reps"
+              [ngModelOptions]="{ standalone: true }"
+            ></ion-input>
+          </ion-col>
+          <ion-col>
+            <ion-input
+              labelPlacement="stacked"
+              label="Weight"
+              placeholder="180"
+              [(ngModel)]="weight"
+              [ngModelOptions]="{ standalone: true }"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </form>
+</ion-content>

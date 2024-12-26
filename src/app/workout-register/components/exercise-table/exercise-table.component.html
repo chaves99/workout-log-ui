@@ -1,0 +1,29 @@
+<ion-item-group *ngFor="let exercise of exercises">
+  <ion-item-divider>
+    <ion-label>{{ exercise.name }}</ion-label>
+    <ion-buttons slot="end">
+      <ion-button shape="round" slot="end">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item-divider>
+  @for(execution of exercise.executions; track execution.order) {
+  <ion-item>
+    <ion-label>
+      {{ execution.order }}: Reps: {{ execution.reps }} Weight:
+      {{ execution.weight }}
+    </ion-label>
+
+    <ion-button
+      slot="end"
+      fill="outline"
+      color="danger"
+      (click)="
+        deleteExecution({ execution: execution, exerciseName: exercise.name })
+      "
+    >
+      <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  }
+</ion-item-group>
