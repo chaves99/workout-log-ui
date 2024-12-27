@@ -8,15 +8,16 @@ import {
   ExerciseExecutionModel,
   ExerciseModel,
   ExerciseService,
+  PreviousRouteService,
   WorkoutModel,
 } from '../shared';
 
+import { Router } from '@angular/router';
 import { ExerciseRegisterModalComponent } from './components/exercise-register-modal/exercise-register-modal.component';
 import { ExerciseTableComponent } from './components/exercise-table/exercise-table.component';
 import { WorkoutNameModalComponent } from './components/workout-name-modal/workout-name-modal.component';
 import filterFirstByName from './helper/exercise-operation.helper';
 import removeFromList from './helper/utils.helper';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'wl-workout-register',
@@ -36,7 +37,7 @@ export class WorkoutRegisterPage implements OnInit {
 
   private exerciseService = inject(ExerciseService);
   private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
+  private previousRouteService = inject(PreviousRouteService);
 
   constructor(public modalCtrl: ModalController) {}
 
@@ -123,9 +124,11 @@ export class WorkoutRegisterPage implements OnInit {
   }
 
   cancelWorkoutName() {
-    // TODO it need to get the last URL
-    // this.activatedRoute.
-    // this.router.navigateByUrl;
+    const lastUrl = this.previousRouteService.getPreviousUrl();
+
+    if (lastUrl) {
+      this.router.navigateByUrl(lastUrl);
+    }
   }
 
   addWorkoutName(name: string) {

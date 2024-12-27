@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonButtons,
@@ -19,6 +19,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { ROUTE_METADATA } from './app.routes';
+import { PreviousRouteService } from './shared';
 
 @Component({
   selector: 'app-root',
@@ -50,6 +51,8 @@ export class AppComponent implements OnInit {
   public title: string = 'Not defined';
 
   public appPages = ROUTE_METADATA.routeMenuPath;
+
+  private previousRouteService = inject(PreviousRouteService);
 
   constructor() {}
 

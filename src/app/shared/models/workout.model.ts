@@ -4,6 +4,6 @@ export interface WorkoutModel {
   description: string;
   exercises: ExerciseModel[];
   start: Date;
-  endDate?: Date;
+  end?: Date;
   // durationSeconds: number;
 }

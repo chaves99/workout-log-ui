@@ -16,7 +16,9 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-header mode="md">
-    <ion-title>{{workout?.start | date: 'medium'}}</ion-title>
+    <ion-title class="ion-margin-bottom">
+      {{workout?.start | date: 'medium'}}
+    </ion-title>
   </ion-header>
   <wl-exercise-table
     [exercises]="workout?.exercises"

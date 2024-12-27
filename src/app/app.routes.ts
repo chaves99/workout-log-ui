@@ -1,17 +1,11 @@
 import { Type } from '@angular/core';
 import { Routes } from '@angular/router';
-import { addOutline, listOutline, removeOutline } from 'ionicons/icons';
+import { addOutline, listOutline } from 'ionicons/icons';
 import { WorkoutLogPage } from './workout-log/workout-log.page';
 import { WorkoutRegisterPage } from './workout-register/workout-register.page';
 
 type IconModules = {
   [name: string]: string;
-};
-
-const ICON_MODULE_METADATA: IconModules = {
-  addOutline,
-  listOutline,
-  removeOutline,
 };
 
 interface RouteMenuPathMetadata {
