@@ -1,0 +1,34 @@
+@if(workout()) {
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="fade">
+    <ion-toolbar>
+      <ion-title size="large">{{workout()?.description}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Start:</ion-col>
+      <ion-col>{{workout()?.start | date:'short'}}</ion-col>
+      <ion-col>end:</ion-col>
+      <ion-col>{{workout()?.end | date:'short'}}</ion-col>
+    </ion-row>
+    <br />
+    <ion-list>
+      @for(exercise of workout()?.exercises; track workout()) {
+      <ion-item-divider>
+        <ion-icon slot="end" name="barbell-outline"></ion-icon>
+        {{exercise.name}} Total weight: {{sumTotalWeightBy(exercise)}}
+      </ion-item-divider>
+      @for(execution of exercise.executions; track execution) {
+      <ion-item>
+        Reps: {{execution.reps}} Weight: {{execution.weight}}
+      </ion-item>
+      } }
+    </ion-list>
+  </ion-grid>
+  <ion-button (click)="goBack()" fill="outline" style="width: 100%">
+    <ion-icon slot="start" name="arrow-back"></ion-icon>
+    Back
+  </ion-button>
+</ion-content>
+}

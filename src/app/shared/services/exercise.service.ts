@@ -27,6 +27,11 @@ export class ExerciseService {
             weight: 100,
             order: 1,
           },
+          {
+            reps: 8,
+            weight: 80,
+            order: 2,
+          },
         ],
         order: 0,
       },

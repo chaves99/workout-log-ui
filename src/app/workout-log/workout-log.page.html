@@ -1,18 +1,12 @@
-<ion-content>
+<ion-content class="ion-padding">
   <ion-header mode="md" class="ion-margin-botton ion-margin-top">
     <ion-title> Your Log </ion-title>
   </ion-header>
 
   @for (workout of workouts; track workout) {
-  <ion-card>
-    <ion-card-content>
-      <ion-item lines="none">
-        <ion-button style="float: left" size="small" fill="clear">
-          <ion-icon slot="icon-only" name="barbell-outline"></ion-icon>
-        </ion-button>
-        <ion-label> {{ workout.description }} </ion-label>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+  <wl-workout-card
+    [workout]="workout"
+    (workoutDetailEvent)="goToDetail($event)"
+  />
   }
 </ion-content>

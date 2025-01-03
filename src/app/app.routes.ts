@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { addOutline, listOutline } from 'ionicons/icons';
 import { WorkoutLogPage } from './workout-log/workout-log.page';
 import { WorkoutRegisterPage } from './workout-register/workout-register.page';
+import { WorkoutDetailPage } from './workout-detail/workout-detail.page';
 
 type IconModules = {
   [name: string]: string;
@@ -38,9 +39,21 @@ export const ROUTE_METADATA: RouteMetadata = {
   iconModules: { listOutline, addOutline },
 };
 
-export const routes: Routes = ROUTE_METADATA.routeMenuPath.map((route) => {
+const metadataRoutes = ROUTE_METADATA.routeMenuPath.map((route) => {
   return {
     path: route.routePath,
     component: route.component,
   };
 });
+
+export const routes: Routes = [
+  ...metadataRoutes,
+  {
+    path: 'workout-detail',
+    loadComponent: () =>
+      import('./workout-detail/workout-detail.page').then(
+        (m) => m.WorkoutDetailPage
+      ),
+    // component: WorkoutDetailPage,
+  },
+];
