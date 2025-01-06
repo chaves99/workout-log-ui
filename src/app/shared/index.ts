@@ -5,3 +5,4 @@ export * from './models/workout.model';
 // Services
 export * from './services/exercise.service';
 export * from './services/previous-route.service';
+export * from './services/workout-singleton-storage.service';

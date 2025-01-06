@@ -13,8 +13,7 @@
       <ion-col>{{workout()?.end | date:'short'}}</ion-col>
     </ion-row>
     <br />
-    <ion-list>
-      @for(exercise of workout()?.exercises; track workout()) {
+    <ion-list *ngFor="let exercise of workout()?.exercises">
       <ion-item-divider>
         <ion-icon slot="end" name="barbell-outline"></ion-icon>
         {{exercise.name}} Total weight: {{sumTotalWeightBy(exercise)}}
@@ -23,7 +22,7 @@
       <ion-item>
         Reps: {{execution.reps}} Weight: {{execution.weight}}
       </ion-item>
-      } }
+      }
     </ion-list>
   </ion-grid>
   <ion-button (click)="goBack()" fill="outline" style="width: 100%">

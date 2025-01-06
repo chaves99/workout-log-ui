@@ -1,16 +1,21 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
 import {
   ExerciseExecutionModel,
   ExerciseModel,
   ExerciseService,
   PreviousRouteService,
   WorkoutModel,
-} from '../shared';
+} from '@shared';
+import { addIcons } from 'ionicons';
+import { add } from 'ionicons/icons';
 
 import { Router } from '@angular/router';
 import { ExerciseRegisterModalComponent } from './components/exercise-register-modal/exercise-register-modal.component';
@@ -31,8 +36,15 @@ import removeFromList from './helper/utils.helper';
     FormsModule,
     ExerciseTableComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkoutRegisterPage implements OnInit {
+  /**
+   * TODO
+   * create a button to edit the exercise name
+   * using the create-outline icon
+   */
+
   workout?: WorkoutModel;
 
   private exerciseService = inject(ExerciseService);
@@ -107,7 +119,7 @@ export class WorkoutRegisterPage implements OnInit {
     }
   }
 
-  async setupModalName() {
+  private async setupModalName() {
     const modal = await this.modalCtrl.create({
       component: WorkoutNameModalComponent,
     });
@@ -124,11 +136,8 @@ export class WorkoutRegisterPage implements OnInit {
   }
 
   cancelWorkoutName() {
-    const lastUrl = this.previousRouteService.getPreviousUrl();
-
-    if (lastUrl) {
-      this.router.navigateByUrl(lastUrl);
-    }
+    const lastUrl = this.previousRouteService.getPreviousUrl() || '/';
+    this.router.navigateByUrl(lastUrl);
   }
 
   addWorkoutName(name: string) {

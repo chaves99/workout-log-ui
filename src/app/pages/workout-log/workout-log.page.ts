@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle } from '@ionic/angular/standalone';
+import {
+  ExerciseService,
+  WorkoutModel,
+  WorkoutSingletonStorageService,
+} from '@shared';
 import { addIcons } from 'ionicons';
 import { arrowForwardOutline, barbellOutline } from 'ionicons/icons';
-import { ExerciseService, WorkoutModel } from '../shared';
 import { WorkoutCardComponent } from './components/workout-card/workout-card.component';
-import { Router } from '@angular/router';
-import { WorkoutSingletonStorageService } from '../shared/services/workout-singleton-storage.service';
 
 @Component({
   selector: 'app-workout-log',

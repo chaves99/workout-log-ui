@@ -10,25 +10,25 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  IonButton,
   IonCol,
   IonContent,
+  IonFooter,
   IonGrid,
   IonHeader,
+  IonIcon,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
   IonRow,
   IonTitle,
   IonToolbar,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonItemDivider,
-  IonIcon,
-  IonFooter,
-  IonButton,
 } from '@ionic/angular/standalone';
-import { WorkoutSingletonStorageService } from '../shared/services/workout-singleton-storage.service';
+import { ExerciseModel, WorkoutSingletonStorageService } from '@shared';
+
 import { addIcons } from 'ionicons';
 import { arrowBack, barbellOutline } from 'ionicons/icons';
-import { ExerciseModel } from '../shared';
 
 @Component({
   selector: 'app-workout-detail',
