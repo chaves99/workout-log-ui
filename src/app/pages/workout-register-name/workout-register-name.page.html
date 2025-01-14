@@ -1,0 +1,42 @@
+<ion-header>
+  <!-- <ion-toolbar mode="md"> -->
+  <h2 style="text-align: center">Let's Start</h2>
+  <!-- </ion-toolbar> -->
+</ion-header>
+<ion-content class="ion-padding">
+  <form (ngSubmit)="confirm()">
+    <ion-item>
+      <ion-input
+        mode="md"
+        labelPlacement="floating"
+        label="Your workout"
+        [(ngModel)]="name"
+        placeholder="Leg day"
+        enterkeyhint="enter"
+        [ngModelOptions]="{ standalone: true }"
+      ></ion-input>
+    </ion-item>
+
+    <ion-button
+      class="ion-margin-top ion-margin-bottom ion-activatable ripple-parent"
+      (click)="confirm()"
+      fill="outline"
+      expand="block"
+      [strong]="false"
+      [disabled]="!(name != null && name != undefined && name.length > 0)"
+    >
+      Confirm
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+    </ion-button>
+  </form>
+  <ion-button
+    class="ion-margin-top"
+    color="warning"
+    fill="outline"
+    (click)="cancel()"
+    expand="block"
+  >
+    <ion-icon slot="start" name="arrow-back"></ion-icon>
+    Cancel
+  </ion-button>
+</ion-content>

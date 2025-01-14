@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, LocationStrategy } from '@angular/common';
 
 import {
   ChangeDetectionStrategy,
@@ -8,18 +8,16 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonButton,
   IonCol,
   IonContent,
-  IonFooter,
   IonGrid,
   IonHeader,
   IonIcon,
   IonItem,
   IonItemDivider,
-  IonLabel,
   IonList,
   IonRow,
   IonTitle,
@@ -39,7 +37,6 @@ import { arrowBack, barbellOutline } from 'ionicons/icons';
     IonIcon,
     IonItemDivider,
     IonList,
-    IonLabel,
     IonItem,
     IonCol,
     IonRow,
@@ -48,7 +45,6 @@ import { arrowBack, barbellOutline } from 'ionicons/icons';
     IonHeader,
     IonTitle,
     IonToolbar,
-    IonFooter,
 
     DatePipe,
     CommonModule,
@@ -63,15 +59,18 @@ export class WorkoutDetailPage implements OnInit {
     WorkoutSingletonStorageService
   );
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private locationStrategy = inject(LocationStrategy);
 
   constructor() {
     addIcons({ barbellOutline, arrowBack });
   }
 
   ngOnInit() {
-    addIcons({ barbellOutline });
     if (!this.workout()) {
-      this.router.navigateByUrl('workout-log');
+      this.router.navigate(['../workout-log'], {
+        relativeTo: this.activatedRoute,
+      });
     }
   }
 
@@ -82,5 +81,9 @@ export class WorkoutDetailPage implements OnInit {
     }, 0);
   }
 
-  goBack() {}
+  goBack() {
+    if (this.locationStrategy.historyGo) {
+      this.locationStrategy.historyGo(-1);
+    }
+  }
 }

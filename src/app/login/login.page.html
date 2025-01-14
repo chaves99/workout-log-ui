@@ -1,33 +1,70 @@
-<ion-header>
-  <h2>Test</h2>
-</ion-header>
-
-<ion-content [fullscreen]="true" class="ion-padding">
-  <h2>Welcome</h2>
-  <form>
-    <ion-input
-      type="email"
-      fill="solid"
-      label="Enter your email"
-      labelPlacement="floating"
-      clearInput="true"
-      email
-      [(ngModel)]="email"
-      [ngModelOptions]="{standalone: true}"
-    ></ion-input>
-    <br />
-
-    <ion-input
-      type="password"
-      label="Password"
-      fill="solid"
-      clearInput="true"
-      labelPlacement="floating"
-      [(ngModel)]="password"
-      [ngModelOptions]="{standalone: true}"
+<ion-content [fullscreen]="false" class="ion-padding ion-align-items-center">
+  <ion-grid>
+    <ion-row
+      class="ion-justify-content-center ion-margin-top ion-margin-bottom"
     >
-      <!-- <ion-input-password-toggle slot="end"></ion-input-password-toggle> -->
-    </ion-input>
-    <ion-button>Login</ion-button>
-  </form>
+      <h2>Welcome to [title]</h2>
+    </ion-row>
+    <form (ngSubmit)="onSubmit()" class="ion-justify-content-center">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-sm="10" size-md="8" size-lg="6" size-xl="4">
+          <ion-input
+            mode="md"
+            type="email"
+            fill="solid"
+            label="Enter your email"
+            labelPlacement="floating"
+            clearInput="true"
+            email
+            [(ngModel)]="email"
+            [ngModelOptions]="{standalone: true}"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-sm="10" size-md="8" size-lg="6" size-xl="4">
+          <ion-input
+            mode="md"
+            type="password"
+            label="Password"
+            fill="solid"
+            clearInput="true"
+            labelPlacement="floating"
+            [(ngModel)]="password"
+            [ngModelOptions]="{standalone: true}"
+          >
+            <!-- <ion-input-password-toggle slot="end"></ion-input-password-toggle> -->
+          </ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-sm="10" size-md="8" size-lg="6" size-xl="4">
+          <ion-button
+            type="submit"
+            class="ion-margin-top ion-margin-bottom"
+            expand="block"
+            fill="solid"
+          >
+            Login
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-sm="10" size-md="8" size-lg="6" size-xl="4">
+        <ion-button
+          class="ion-margin-top"
+          expand="block"
+          fill="outline"
+          color="tertiary"
+        >
+          <ion-icon slot="left" name="arrow-back"></ion-icon>
+          Register now
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

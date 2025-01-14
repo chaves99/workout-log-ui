@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle } from '@ionic/angular/standalone';
 import {
   ExerciseService,
@@ -59,6 +59,7 @@ export class WorkoutLogPage implements OnInit {
 
   private exerciseService = inject(ExerciseService);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private workoutSingletonStorageService = inject(
     WorkoutSingletonStorageService
   );
@@ -68,7 +69,6 @@ export class WorkoutLogPage implements OnInit {
   }
 
   ngOnInit() {
-    addIcons({ barbellOutline, arrowForwardOutline });
     this.exerciseService.fetchExercises().subscribe((exercises) => {
       this.workouts.forEach((workout) => {
         if (exercises) {
@@ -80,7 +80,9 @@ export class WorkoutLogPage implements OnInit {
 
   goToDetail(workout: WorkoutModel) {
     this.workoutSingletonStorageService.setWorkout(workout);
-    this.router.navigateByUrl('workout-detail');
+    this.router.navigate(['../workout-detail'], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }
 

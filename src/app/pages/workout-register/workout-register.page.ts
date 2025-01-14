@@ -4,6 +4,7 @@ import {
   Component,
   inject,
   OnInit,
+  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -11,16 +12,14 @@ import {
   ExerciseExecutionModel,
   ExerciseModel,
   ExerciseService,
-  PreviousRouteService,
   WorkoutModel,
 } from '@shared';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExerciseRegisterModalComponent } from './components/exercise-register-modal/exercise-register-modal.component';
 import { ExerciseTableComponent } from './components/exercise-table/exercise-table.component';
-import { WorkoutNameModalComponent } from './components/workout-name-modal/workout-name-modal.component';
 import filterFirstByName from './helper/exercise-operation.helper';
 import removeFromList from './helper/utils.helper';
 
@@ -45,17 +44,26 @@ export class WorkoutRegisterPage implements OnInit {
    * using the create-outline icon
    */
 
-  workout?: WorkoutModel;
+  workout = signal<WorkoutModel>({ description: '', exercises: [], start: new Date() });
 
-  private exerciseService = inject(ExerciseService);
-  private router = inject(Router);
-  private previousRouteService = inject(PreviousRouteService);
+  private readonly exerciseService = inject(ExerciseService);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   constructor(public modalCtrl: ModalController) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     addIcons({ add });
-    await this.setupModalName();
+    const exerciseName =
+      this.activatedRoute.snapshot.paramMap.get('workoutName');
+    if (exerciseName) {
+      this.workout.update(w => {
+        w.description = exerciseName;
+        return w;
+      });
+    } else {
+      this.router.navigate(['page', 'workout-register-name']);
+    }
   }
 
   async setupModalAddExercise(exerciseName?: string) {
@@ -64,11 +72,11 @@ export class WorkoutRegisterPage implements OnInit {
       componentProps: { name: exerciseName },
     });
     modal.present();
-    modal.onWillDismiss().then(({ data, role }) => {
-      if (role === 'confirm') {
-        this.addExerciseFromModal(data);
-      }
-    });
+    const { data, role } = await modal.onWillDismiss();
+    if (role === 'confirm') {
+      this.addExerciseFromModal(data);
+    }
+    console.log(this.workout());
   }
 
   addExerciseFromModal({
@@ -82,7 +90,7 @@ export class WorkoutRegisterPage implements OnInit {
   }) {
     if (this.workout) {
       let exercise: ExerciseModel | null = filterFirstByName(
-        this.workout.exercises,
+        this.workout().exercises,
         name
       );
       if (exercise) {
@@ -92,10 +100,13 @@ export class WorkoutRegisterPage implements OnInit {
           order: exercise.executions.length,
         });
       } else {
-        this.workout.exercises.push({
-          name: name,
-          order: this.workout.exercises.length,
-          executions: [{ order: 0, reps: reps, weight: weight }],
+        this.workout.update(w => {
+          w.exercises.push({
+            name: name,
+            order: this.workout().exercises.length,
+            executions: [{ order: 0, reps: reps, weight: weight }],
+          });
+          return w;
         });
       }
     }
@@ -109,44 +120,13 @@ export class WorkoutRegisterPage implements OnInit {
     exerciseName: string;
   }) {
     if (this.workout) {
-      let exercise = filterFirstByName(this.workout.exercises, exerciseName);
+      let exercise = filterFirstByName(this.workout().exercises, exerciseName);
       if (exercise) {
         removeFromList(exercise.executions, execution);
         if (exercise.executions.length === 0) {
-          removeFromList(this.workout.exercises, exercise);
+          removeFromList(this.workout().exercises, exercise);
         }
       }
     }
-  }
-
-  private async setupModalName() {
-    const modal = await this.modalCtrl.create({
-      component: WorkoutNameModalComponent,
-    });
-    if (!this.workout || !this.workout?.description) {
-      modal.present();
-    }
-    modal.onWillDismiss().then(({ data, role }) => {
-      if (role === 'confirm') {
-        this.addWorkoutName(data);
-      } else {
-        this.cancelWorkoutName();
-      }
-    });
-  }
-
-  cancelWorkoutName() {
-    const lastUrl = this.previousRouteService.getPreviousUrl() || '/';
-    this.router.navigateByUrl(lastUrl);
-  }
-
-  addWorkoutName(name: string) {
-    this.exerciseService.fetchExercises().subscribe((exercises) => {
-      this.workout = {
-        description: name,
-        start: new Date(),
-        exercises: exercises || [],
-      };
-    });
   }
 }

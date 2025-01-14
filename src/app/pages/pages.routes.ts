@@ -4,16 +4,19 @@ import { addOutline, listOutline } from 'ionicons/icons';
 import { WorkoutLogPage } from './workout-log/workout-log.page';
 import { WorkoutRegisterPage } from './workout-register/workout-register.page';
 import { PagesComponent } from './pages.component';
+import { WorkoutDetailPage } from './workout-detail/workout-detail.page';
+import { WorkoutRegisterNamePage } from './workout-register-name/workout-register-name.page';
 
 type IconModules = {
   [name: string]: string;
 };
 
 interface RouteMenuPathMetadata {
-  title: string;
+  title?: string;
   component: Type<any>;
   routePath: string;
-  icon: string;
+  icon?: string;
+  showOnMenu: boolean;
 }
 
 interface RouteMetadata {
@@ -25,15 +28,27 @@ export const ROUTE_METADATA: RouteMetadata = {
   routeMenuPath: [
     {
       title: 'New Workout',
-      component: WorkoutRegisterPage,
-      routePath: 'workout-register',
+      component: WorkoutRegisterNamePage,
+      routePath: 'workout-register-name',
       icon: 'add-outline',
+      showOnMenu: true,
     },
     {
       title: 'Workout Log',
       component: WorkoutLogPage,
       routePath: 'workout-log',
       icon: 'list-outline',
+      showOnMenu: true,
+    },
+    {
+      component: WorkoutDetailPage,
+      routePath: 'workout-detail',
+      showOnMenu: false,
+    },
+    {
+      component: WorkoutRegisterPage,
+      routePath: 'workout-register/:workoutName',
+      showOnMenu: false,
     },
   ],
   iconModules: { listOutline, addOutline },
@@ -50,15 +65,6 @@ export const pagesRoutes: Routes = [
   {
     path: '',
     component: PagesComponent,
-    children: [
-      ...metadataRoutes,
-      {
-        path: 'workout-detail',
-        loadComponent: () =>
-          import('./workout-detail/workout-detail.page').then(
-            (m) => m.WorkoutDetailPage
-          ),
-      },
-    ],
+    children: [...metadataRoutes],
   },
 ];

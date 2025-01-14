@@ -46,7 +46,7 @@ import { ROUTE_METADATA } from './pages.routes';
 })
 export class PagesComponent implements OnInit {
   @ViewChild('ionMenu') ionMenu?: IonMenu;
-  public appPages = ROUTE_METADATA.routeMenuPath;
+  public appPages = ROUTE_METADATA.routeMenuPath.filter((r) => r.showOnMenu);
 
   private previousRouteService = inject(PreviousRouteService);
 
